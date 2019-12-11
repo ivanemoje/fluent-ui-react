@@ -50,7 +50,8 @@
   },
   "repository": "microsoft/fluent-ui-react.git",
   "scripts": {
-    "build": "gulp bundle:package --package react"
+    "build": "gulp bundle:package --package react",
+    "test": "gulp test"
   },
   "sideEffects": false,
   "types": "dist/es/index.d.ts"

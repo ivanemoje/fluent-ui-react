@@ -29,7 +29,8 @@
   },
   "repository": "microsoft/fluent-ui-react.git",
   "scripts": {
-    "build": "gulp bundle:package:no-umd --package react-component-nesting-registry"
+    "build": "gulp bundle:package:no-umd --package react-component-nesting-registry",
+    "test": "gulp test"
   },
   "sideEffects": false,
   "types": "dist/es/index.d.ts"

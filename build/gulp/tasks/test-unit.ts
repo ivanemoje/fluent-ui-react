@@ -1,7 +1,6 @@
 import { parallel, series, task } from 'gulp'
 import yargs from 'yargs'
 
-import sh from '../sh'
 import jest, { JestPluginConfig } from '../plugins/gulp-jest'
 
 const argv = yargs
@@ -19,14 +18,9 @@ const jestConfigFromArgv: Partial<JestPluginConfig> = {
   testFilePattern: argv.testFilePattern as string,
 }
 
-task('test:jest:pre', () => sh('yarn satisfied'))
-
 task(
   'test:jest:setup',
-  series(
-    'test:jest:pre',
-    parallel('build:docs:component-info', 'build:docs:component-menu-behaviors'),
-  ),
+  parallel('build:docs:component-info', 'build:docs:component-menu-behaviors'),
 )
 
 task(
