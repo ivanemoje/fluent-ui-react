@@ -18,6 +18,10 @@ const jestConfigFromArgv: Partial<JestPluginConfig> = {
   testFilePattern: argv.testFilePattern as string,
 }
 
+if (process.env.CI) {
+  jestConfigFromArgv.maxWorkers = 2
+}
+
 task(
   'test:jest:setup',
   parallel('build:docs:component-info', 'build:docs:component-menu-behaviors'),
