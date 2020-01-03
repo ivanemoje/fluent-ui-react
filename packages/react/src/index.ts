@@ -125,6 +125,9 @@ export { default as List } from './components/List/List'
 export * from './components/List/ListItem'
 export { default as ListItem } from './components/List/ListItem'
 
+export { default as ContextList } from './components/ContextList/List'
+export { default as ContextListItem } from './components/ContextList/ListItem'
+
 export * from './components/Menu/Menu'
 export { default as Menu } from './components/Menu/Menu'
 export * from './components/Menu/MenuItem'

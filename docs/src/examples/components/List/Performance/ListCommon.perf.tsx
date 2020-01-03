@@ -1,4 +1,4 @@
-import { List, Image } from '@fluentui/react'
+import { ContextList as List, Image } from '@fluentui/react'
 import * as React from 'react'
 
 const avatars = {
