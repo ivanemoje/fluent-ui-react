@@ -87,7 +87,7 @@ const ListItem: ListItemComponent = props => {
   const ElementType = getElementType(props)
   const unhandledProps = getUnhandledProps(Object.keys(ListItem.propTypes) as any, props)
 
-  const parentProps = useListConsumer()
+  const parentProps = useListConsumer(props.index)
   const handleClick = (e: React.MouseEvent | React.KeyboardEvent) => {
     _.invoke(props, 'onClick', e, props)
     parentProps.onClick(e)

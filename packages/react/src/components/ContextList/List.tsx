@@ -26,7 +26,7 @@ import {
   useStateManager,
 } from '@fluentui/react-bindings'
 import useStyles from './useStyles'
-import { useListProvider } from './ListContext'
+import { ListContext } from './ListContext'
 
 export interface ListSlotClassNames {
   item: string
@@ -125,15 +125,8 @@ const List: ListComponent = props => {
     mapPropsToStyles: () => props,
   })
 
-  const [Provider, value] = useListProvider({
-    debug: props.debug,
-    selectable: props.selectable,
-    navigable: props.navigable,
-    truncateContent: props.truncateContent,
-    truncateHeader: props.truncateHeader,
-    variables: props.variables,
-
-    onItemClick: (e, index) => {
+  const onItemClick = React.useCallback(
+    (e, index) => {
       if (selectable) {
         actions.select(index)
         _.invoke(props, 'onSelectedIndexChange', e, {
@@ -142,8 +135,20 @@ const List: ListComponent = props => {
         })
       }
     },
+    [actions, selectable],
+  )
+
+  const value = {
+    debug: props.debug,
+    selectable: props.selectable,
+    navigable: props.navigable,
+    truncateContent: props.truncateContent,
+    truncateHeader: props.truncateHeader,
+    variables: props.variables,
+
+    onItemClick,
     selectedIndex: state.selectedIndex,
-  })
+  }
 
   return (
     <ElementType
@@ -153,9 +158,9 @@ const List: ListComponent = props => {
         ...unhandledProps,
       })}
     >
-      <Provider value={value}>
+      <ListContext.Provider value={value}>
         {childrenExist(children) ? children : _.map(items, ListItem.create)}
-      </Provider>
+      </ListContext.Provider>
     </ElementType>
   )
 }
