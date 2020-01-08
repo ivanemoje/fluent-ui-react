@@ -11,7 +11,6 @@
   "scripts": {
     "build": "just-scripts build",
     "clean": "just-scripts clean",
-    "test": "just-scripts test",
     "perf:test": "just-scripts perf-test"
   },
   "devDependencies": {
