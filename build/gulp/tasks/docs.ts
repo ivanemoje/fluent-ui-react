@@ -232,13 +232,26 @@ task('serve:docs:stop', () => forceClose(server))
 // Watch
 // ----------------------------------------
 
-task('watch:docs', cb => {
+task('watch:docs:component-info', cb => {
   // rebuild component info
   watch(componentsSrc, series('build:docs:component-info'))
     .on('add', logWatchAdd)
     .on('change', logWatchChange)
     .on('unlink', logWatchUnlink)
 
+  cb()
+})
+
+task('watch:docs:component-menu-behaviors', cb => {
+  watch(behaviorSrc, series('build:docs:component-menu-behaviors'))
+    .on('add', logWatchAdd)
+    .on('change', logWatchChange)
+    .on('unlink', filePath => handleWatchUnlink('component-menu-behaviors', filePath))
+
+  cb()
+})
+
+task('watch:docs:other', cb => {
   watch(schemaSrc, series('build:docs:schema')).on('change', logWatchChange)
 
   // rebuild example menus
@@ -261,11 +274,6 @@ task('watch:docs', cb => {
       } catch (e) {}
     })
 
-  watch(behaviorSrc, series('build:docs:component-menu-behaviors'))
-    .on('add', logWatchAdd)
-    .on('change', logWatchChange)
-    .on('unlink', filePath => handleWatchUnlink('component-menu-behaviors', filePath))
-
   // rebuild images
   watch(`${config.paths.docsSrc()}/**/*.{png,jpg,gif}`, series('build:docs:images'))
     .on('add', logWatchAdd)
@@ -274,6 +282,11 @@ task('watch:docs', cb => {
 
   cb()
 })
+
+task(
+  'watch:docs',
+  series('watch:docs:component-info', 'watch:docs:component-menu-behaviors', 'watch:docs:other'),
+)
 
 // ----------------------------------------
 // Default

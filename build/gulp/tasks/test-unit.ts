@@ -1,4 +1,4 @@
-import { parallel, series, task } from 'gulp'
+import { series, task } from 'gulp'
 import yargs from 'yargs'
 
 import jest, { JestPluginConfig } from '../plugins/gulp-jest'
@@ -23,11 +23,6 @@ if (process.env.CI) {
 }
 
 task(
-  'test:jest:setup',
-  parallel('build:docs:component-info', 'build:docs:component-menu-behaviors'),
-)
-
-task(
   'test:jest',
   jest({
     config: './jest.config.js',
@@ -49,5 +44,5 @@ task(
 // Tests
 // ----------------------------------------
 
-task('test', series('test:jest:setup', 'test:jest'))
-task('test:watch', series('test:jest:setup', parallel('test:jest:watch', 'watch:docs')))
+task('test', series('test:jest'))
+task('test:watch', series('test:jest', 'test:jest:watch'))
